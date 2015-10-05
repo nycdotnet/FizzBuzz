@@ -44,9 +44,22 @@ namespace FizzBuzzDotNet
             MatchType = MessageMatch.Contains)]
         public void FizzBuzzConstructor_GivenCountToLessThanStartFrom_ThrowsException()
         {
-            var fb = new FizzBuzz(1,2);
+            var fb = new FizzBuzz(1, 2);
         }
 
+        [Test()]
+        public void Get_GivenUInt64MaxAppropriately_WillReturnCorrectResult()
+        {
+            var fb = new FizzBuzz(UInt64.MaxValue);
+            Assert.AreEqual("fizzbuzz", fb.Get(UInt64.MaxValue));
+        }
+
+        [Test()]
+        public void Get_GivenZeroAppropriately_WillReturnCorrectResult()
+        {
+            var fb = new FizzBuzz(1,0);
+            Assert.AreEqual("fizzbuzz", fb.Get(0));
+        }
 
         [Test()]
         public void Get_WithDefaultRulesAnd1_Returns1()
