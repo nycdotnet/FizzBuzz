@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using FizzBuzzDotNet.Business;
 using NUnit.Framework;
 
@@ -96,6 +97,34 @@ namespace FizzBuzzDotNet
             Assert.AreEqual("buzz", fb.Get(fb.countTo), "expected that the countTo value (which should be the top bound) would return a valid string result.");
         }
 
+        [Test()]
+        public void Get_WithNewApplicableRuleAtEnd_ReturnsFizzBuzzPop()
+        {
+            var fb = new FizzBuzz();
+            fb.Rules.Add(new Rule(2, "pop"));
+            Assert.AreEqual("fizzbuzzpop", fb.Get(30));
+        }
+        
+        [Test()]
+        public void Get_WithNewApplicableRuleInsertedAtStart_ReturnsPopFizzBuzz()
+        {
+            var fb = new FizzBuzz();
+            fb.Rules.Insert(0, new Rule(2, "pop"));
+            Assert.AreEqual("popfizzbuzz", fb.Get(30));
+        }
+
+        [Test()]
+        public void Get_WhenRulesHaveBeenCleared_AlwaysReturnsTheNumber()
+        {
+            var fb = new FizzBuzz(15);
+            fb.Rules.Clear();
+
+            for (UInt64 i = 1; i <= fb.countTo; i++)
+            {
+                Assert.AreEqual(i.ToString(), fb.Get(i));
+            }
+        }
+        
         [Test()]
         [ExpectedException(typeof(IndexOutOfRangeException),
             ExpectedMessage = "out of range index 0.",

@@ -13,8 +13,16 @@ namespace FizzBuzzDotNet.Business
 
         public readonly UInt64 startFrom;
         public readonly UInt64 countTo;
+        
+        private List<Rule> rules;
+        public IList<Rule> Rules
+        {
+            get {
+                return rules;
+            }
+        }
 
-        // I chose to put countTo before startFrom mostly because I'm assuming
+        // I chose to place countTo before startFrom mostly because I'm assuming
         // that FizzBuzz will usually start from 1.  If it would be common
         // to start from a different number, it might make sense to reverse these,
         // but it would have to be done early on in the project; otherwise it'd create
@@ -27,6 +35,17 @@ namespace FizzBuzzDotNet.Business
             }
             this.countTo = countTo;
             this.startFrom = startFrom;
+            this.rules = (List<Rule>)FizzBuzz.DefaultRules();
+        }
+
+        public static IList<Rule> DefaultRules()
+        {
+            List<Rule> rules = new List<Rule>() {
+                new Rule(3, "fizz"),
+                new Rule(5, "buzz")
+            };
+            
+            return rules;
         }
 
         public IEnumerable<string> All()
@@ -46,20 +65,24 @@ namespace FizzBuzzDotNet.Business
                     "Call to Get() with out of range index {0}.  Only numbers from {1} to {2} are supported with this instance.",
                     number, startFrom, countTo));
             }
-            string result = "";
-            if (number % 3 == 0)
-            {
-                result = "fizz";
+
+            var substitutions = new List<string>();
+
+            foreach (var rule in rules) {
+                string substitute = rule.apply(number);
+                if (!String.IsNullOrEmpty(substitute))
+                {
+                    substitutions.Add(substitute);
+                }
             }
-            if (number % 5 == 0)
+
+            if (substitutions.Any())
             {
-                result += "buzz";
+                return String.Join("", substitutions);
             }
-            if (string.IsNullOrEmpty(result))
-            {
-                result = number.ToString();
-            }
-            return result;
+
+            return number.ToString();
+
         }
     }
 }
