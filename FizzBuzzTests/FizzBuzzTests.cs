@@ -114,6 +114,15 @@ namespace FizzBuzzDotNet
         }
 
         [Test()]
+        public void Get_WithNewApplicableDuplicateRuleAtEnd_ReturnsFizzBuzzPopBang()
+        {
+            var fb = new FizzBuzz();
+            fb.Rules.Add(new Rule(2, "pop"));
+            fb.Rules.Add(new Rule(2, "bang"));
+            Assert.AreEqual("fizzbuzzpopbang", fb.Get(30), "Expected both 'duplicate' rules to apply.");
+        }
+
+        [Test()]
         public void Get_WhenRulesHaveBeenCleared_AlwaysReturnsTheNumber()
         {
             var fb = new FizzBuzz(15);
