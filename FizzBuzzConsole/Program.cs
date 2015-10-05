@@ -16,10 +16,4 @@ namespace FizzBuzzDotNet
         }
     }
 
-    /*
-     * Automated test cases. 
-     * Provide replacement rules. - extend to support any number of replacement rules. (number and word pairs)
-     * put on GitHub and email URL to Rayne
-     * 
-     */
 }
