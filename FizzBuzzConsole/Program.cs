@@ -7,7 +7,7 @@ namespace FizzBuzzDotNet
     {
         static void Main(string[] args)
         {
-            var fb = new FizzBuzz(2000000000);
+            var fb = new FizzBuzz(3000000000);
             foreach (var item in fb.All())
             {
                 Console.WriteLine(item);
